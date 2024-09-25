@@ -1,4 +1,4 @@
-# Calculating Net Present Value
+# 2.Calculating Net Present Value
 import codecademylib3_seaborn
 import matplotlib.pyplot as plt
 
@@ -36,4 +36,53 @@ plt.title('NPV Profile for Projects A and B')
 plt.xlabel('Discount Rate')
 plt.ylabel('Net Present Value')
 plt.legend()
+plt.show()
+
+# 3.Basic Stock Analysis
+import codecademylib3_seaborn
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('AAPL_data.csv')
+print(df.head())
+
+df['Daily Log Rate of Return'] = np.log(df['Adj Close']/df['Adj Close'].shift(1))
+
+print(df['Daily Log Rate of Return'])
+
+stdev = np.std(df['Daily Log Rate of Return'])
+print(stdev)
+
+plt.hist(df['Daily Log Rate of Return'].dropna())
+plt.title('Histogram of AAPL Daily Log Rates of Return')
+plt.xlabel('Log Rate of Return')
+plt.ylabel('Number of Days')
+plt.show()
+
+# 3.Python Candlestick Chart
+# A candlestick chart plots the daily opening price, closing price, lowest price and highest price of a particular stock, and shows how that price changed each day over a given period of
+# time. Each day is shown by one “candlestick,” and can be helpful when analysts are trying to make predictions about how a particular price of a stock may move in the future.
+import codecademylib3_seaborn
+import datetime
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from mpl_finance import candlestick_ohlc
+
+df = pd.read_csv('AAPL_data.csv')
+print(df.head())
+
+df['Date'] = pd.to_datetime(df['Date'])
+df["Date"] = df["Date"].apply(mdates.date2num)
+
+candle_data = df[['Date', 'Open', 'High', 'Low', 'Close']]
+print(candle_data.head())
+
+f1, ax = plt.subplots(figsize = (10,5))
+candlestick_ohlc(ax,candle_data.values, colorup='green', colordown='red')
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+plt.title('Candlestick Chart for AAPL')
+plt.xlabel('Date')
+plt.ylabel('Value($)')
 plt.show()
