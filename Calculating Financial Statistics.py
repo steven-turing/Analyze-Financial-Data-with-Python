@@ -1,5 +1,5 @@
 #Introduction
-##
+###
 rate_of_return = 0.075
 
 def display_as_percentage(val):
